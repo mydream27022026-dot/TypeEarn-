@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TypeEarn Pro - Earn Money Typing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #00b09b, #96c93d, #fbbf24, #f97316);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .app-wrapper {
+            width: 100%;
+            max-width: 480px;
+            height: 95vh;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Splash Screen */
+        .splash-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            animation: fadeScale 1.2s ease;
+        }
+
+        @keyframes fadeScale {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .splash-logo {
+            width: 140px;
+            height: 140px;
+            border-radius: 40px;
+            object-fit: cover;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3), 0 0 0 4px rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .splash-title {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff, #e0f2e9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .splash-sub {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        /* Auth Section */
+        .auth-container {
+            height: 100%;
+            overflow-y: auto;
+            padding: 24px;
+            display: none;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 30px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-logo-sm {
+            width: 70px;
+            height: 70px;
+            border-radius: 20px;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 20px;
+            border: 2px solid white;
+        }
+
+        .auth-head {
+            color: white;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 16px 18px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .input-field:focus {
+            border-color: #96c93d;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            color: white;
+            box-shadow: 0 10px 20px rgba(0, 176, 155, 0.3);
+            margin-bottom: 15px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 176, 155, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        .auth-switch {
+            color: white;
+            text-align: center;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: 500;
+            text-decoration: underline;
+            opacity: 0.9;
+        }
+
+        /* Main App */
+        .main-container {
+            height: 100%;
+            display: none;
+            position: relative;
+        }
+
+        .app-header {
+            padding: 20px 20px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .user-greeting h2 {
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .user-greeting p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 18px;
+        }
+
+        .header-actions i {
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .header-actions i:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 15px rgba(255,255,255,0.5);
+        }
+
+        .notification-badge {
+            position: relative;
+        }
+
+        .badge-count {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background: #f97316;
+            color: white;
+            border-radius: 50px;
+            width: 18px;
+            height: 18px;
+            font-size: 11px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .content-panel {
+            height: calc(100% - 140px);
+            overflow-y: auto;
+            padding: 0 20px 20px;
+            scroll-behavior: smooth;
+        }
+
+        .content-panel::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .content-panel::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .content-panel::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        /* Stats Cards */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-block {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border-radius: 20px;
+            padding: 15px 8px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            color: white;
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Task Card */
+        .task-item {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: cardFade 0.5s ease;
+        }
+
+        @keyframes cardFade {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .task-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .task-name {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .task-reward {
+            background: linear-gradient(135deg, #fbbf24, #f97316);
+            padding: 8px 16px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 5px 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .task-text {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 16px;
+            border-radius: 16px;
+            border-left: 4px solid #96c93d;
+        }
+
+        .typing-area {
+            width: 100%;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 18px;
+            color: white;
+            font-size: 15px;
+            line-height: 1.6;
+            resize: vertical;
+            min-height: 120px;
+            margin: 15px 0;
+            transition: all 0.3s;
+        }
+
+        .typing-area:focus {
+            border-color: #96c93d;
+            background: rgba(255, 255, 255, 0.12);
+            outline: none;
+        }
+
+        .submit-task {
+            background: linear-gradient(135deg, #fbbf24, #f97316);
+            color: white;
+            border: none;
+            border-radius: 18px;
+            padding: 16px;
+            font-weight: 700;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+        }
+
+        .submit-task:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(249, 115, 22, 0.4);
+        }
+
+        /* Ad Container */
+        .ad-space {
+            width: 100%;
+            min-height: 280px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 24px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ad-space iframe, .ad-space img, .ad-space script {
+            max-width: 100%;
+        }
+
+        /* Profile Card */
+        .profile-avatar-lg {
+            width: 100px;
+            height: 100px;
+            border-radius: 30px;
+            object-fit: cover;
+            border: 4px solid white;
+            margin: 0 auto 20px;
+            display: block;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+        }
+
+        .info-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .info-label {
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .info-value {
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .referral-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .ref-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ref-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Wallet Section */
+        .withdraw-card {
+            background: linear-gradient(135deg, rgba(0, 176, 155, 0.2), rgba(150, 201, 61, 0.2));
+            border-radius: 24px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .timer-block {
+            background: linear-gradient(135deg, #fbbf24, #f97316);
+            padding: 16px;
+            border-radius: 18px;
+            text-align: center;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-item {
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 8px 16px;
+            border-radius: 50px;
+            flex: 1;
+        }
+
+        .nav-item i {
+            font-size: 22px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: white;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            box-shadow: 0 5px 15px rgba(0, 176, 155, 0.4);
+        }
+
+        /* Announcements */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            border-radius: 24px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .slider-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 10px 0 20px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            width: 25px;
+            background: white;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .social-icon {
+            width: 55px;
+            height: 55px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 28px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Popup Toast */
+        .popup-toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: none;
+            text-align: center;
+            min-width: 300px;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .popup-toast.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .popup-icon {
+            font-size: 60px;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .popup-title {
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00b09b, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .popup-msg {
+            color: #333;
+            font-size: 16px;
+        }
+
+        /* Maintenance Screen */
+        .maintenance-screen {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .maintenance-screen img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 4px solid rgba(255,255,255,0.2);
+        }
+
+        .maintenance-btn {
+            background: linear-gradient(135deg, #fbbf24, #f97316);
+            border: none;
+            padding: 18px 45px;
+            border-radius: 50px;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 15px 30px rgba(249, 115, 22, 0.4);
+            transition: all 0.3s;
+        }
+
+        .maintenance-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(249, 115, 22, 0.5);
+        }
+
+        /* Leaderboard */
+        .leader-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rank-badge {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #fbbf24, #f97316);
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            color: white;
+            font-size: 16px;
+        }
+
+        /* Floating Social Ad */
+        #social-ad-container {
+            position: fixed;
+            bottom: 90px;
+            right: 10px;
+            z-index: 999;
+            max-width: 300px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 380px) {
+            .stats-row {
+                gap: 6px;
+            }
+            
+            .stat-number {
+                font-size: 22px;
+            }
+            
+            .nav-item {
+                padding: 6px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper" id="appWrapper">
+        <!-- Splash Screen -->
+        <div class="splash-container" id="splashScreen">
+            <img src="https://via.placeholder.com/200" alt="Logo" class="splash-logo" id="splashLogo">
+            <h1 class="splash-title">TypeEarn</h1>
+            <p class="splash-sub">Transform typing into earnings</p>
+        </div>
+
+        <!-- Maintenance Screen -->
+        <div class="maintenance-screen" id="maintenanceScreen" style="display: none;">
+            <img src="" alt="Maintenance" id="maintenanceImage">
+            <button class="maintenance-btn" id="maintenanceBtn">Contact Support</button>
+        </div>
+
+        <!-- Auth Section -->
+        <div class="auth-container" id="authSection">
+            <div class="glass-card">
+                <img src="https://via.placeholder.com/70" alt="Logo" class="auth-logo-sm" id="authLogo">
+                <h2 class="auth-head" id="authTitle">Welcome Back!</h2>
+                
+                <!-- Login Form -->
+                <div id="loginForm">
+                    <input type="email" class="input-field" id="loginEmail" placeholder="Email Address">
+                    <input type="password" class="input-field" id="loginPassword" placeholder="Password">
+                    <button class="btn" id="loginBtn">Login to Dashboard</button>
+                    <button class="btn btn-outline" onclick="showRegister()">Create New Account</button>
+                </div>
+
+                <!-- Register Form -->
+                <div id="registerForm" style="display: none;">
+                    <input type="text" class="input-field" id="regName" placeholder="Full Name">
+                    <input type="email" class="input-field" id="regEmail" placeholder="Email Address">
+                    <input type="password" class="input-field" id="regPassword" placeholder="Password (min 6 chars)">
+                    <input type="tel" class="input-field" id="regWhatsapp" placeholder="WhatsApp Number">
+                    <textarea class="input-field" id="regAddress" placeholder="Your Address" rows="2"></textarea>
+                    <input type="text" class="input-field" id="regReferral" placeholder="Referral Code (Optional)">
+                    <button class="btn" id="registerBtn">Register Account</button>
+                    <div class="auth-switch" onclick="showLogin()">← Back to Login</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div class="main-container" id="mainSection">
+            <!-- Header -->
+            <div class="app-header">
+                <div class="user-greeting">
+                    <h2 id="greetingText">Welcome!</h2>
+                    <p><i class="fas fa-coins" style="color: #fbbf24;"></i> <span id="walletBalance">0</span> coins</p>
+                </div>
+                <div class="header-actions">
+                    <div class="notification-badge" onclick="showNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge-count" id="notifCount">0</span>
+                    </div>
+                    <i class="fas fa-sign-out-alt" onclick="logout()"></i>
+                </div>
+            </div>
+
+            <!-- Content Panel -->
+            <div class="content-panel" id="contentPanel">
+                <!-- Home Section -->
+                <div id="homeSection">
+                    <div class="stats-row">
+                        <div class="stat-block">
+                            <div class="stat-number" id="todayTasksCount">0</div>
+                            <div class="stat-label">Today's Tasks</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number" id="todayEarnedCount">0</div>
+                            <div class="stat-label">Today Earned</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number" id="totalEarnedCount">0</div>
+                            <div class="stat-label">Total Coins</div>
+                        </div>
+                    </div>
+
+                    <div id="tasksList">
+                        <!-- Tasks will be injected here -->
+                    </div>
+                </div>
+
+                <!-- Profile Section -->
+                <div id="profileSection" style="display: none;">
+                    <div class="glass-card">
+                        <img src="https://via.placeholder.com/100" alt="Avatar" class="profile-avatar-lg" id="profileAvatar">
+                        
+                        <div class="info-line">
+                            <span class="info-label">Full Name</span>
+                            <span class="info-value" id="profileFullName">-</span>
+                        </div>
+                        <div class="info-line">
+                            <span class="info-label">Email</span>
+                            <span class="info-value" id="profileEmail">-</span>
+                        </div>
+                        <div class="info-line">
+                            <span class="info-label">WhatsApp</span>
+                            <span class="info-value" id="profilePhone">-</span>
+                        </div>
+                        <div class="info-line">
+                            <span class="info-label">Address</span>
+                            <span class="info-value" id="profileAddress">-</span>
+                        </div>
+                        <div class="info-line">
+                            <span class="info-label">Referral Code</span>
+                            <span class="info-value" id="profileRefCode">-</span>
+                        </div>
+                        
+                        <div class="referral-actions">
+                            <button class="ref-btn" onclick="copyReferral()"><i class="fas fa-copy"></i> Copy</button>
+                            <button class="ref-btn" onclick="shareReferral()"><i class="fab fa-whatsapp"></i> Share</button>
+                        </div>
+                    </div>
+
+                    <h3 style="color: white; margin: 20px 0 10px;">Earnings History</h3>
+                    <div class="glass-card" id="earningHistoryList">
+                        <p style="color: rgba(255,255,255,0.6); text-align: center;">No history yet</p>
+                    </div>
+                </div>
+
+                <!-- Wallet Section -->
+                <div id="walletSection" style="display: none;">
+                    <div class="stats-row">
+                        <div class="stat-block">
+                            <div class="stat-number" id="walletTotalCoins">0</div>
+                            <div class="stat-label">Total Coins</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number" id="walletTodayCoins">0</div>
+                            <div class="stat-label">Today's Earn</div>
+                        </div>
+                        <div class="stat-block">
+                            <div class="stat-number" id="walletReferralCoins">0</div>
+                            <div class="stat-label">Referral</div>
+                        </div>
+                    </div>
+
+                    <div class="withdraw-card">
+                        <h3 style="color: white; margin-bottom: 15px;">Withdraw Funds</h3>
+                        
+                        <div class="timer-block" id="withdrawTimerDisplay" style="display: none;">
+                            <i class="fas fa-clock"></i> Next in <span id="countdownTimer">00:00:00</span>
+                        </div>
+
+                        <div id="withdrawInputs">
+                            <input type="text" class="input-field" id="withdrawName" placeholder="Account Holder Name">
+                            <input type="text" class="input-field" id="withdrawBank" placeholder="Bank Name">
+                            <input type="text" class="input-field" id="withdrawIfsc" placeholder="IFSC Code">
+                            <input type="number" class="input-field" id="withdrawAmount" placeholder="Amount in Coins">
+                            <div style="color: rgba(255,255,255,0.8); margin: 10px 0; font-size: 14px;">
+                                Min: <span id="minWithdrawAmount">100</span> coins | 1000 coins = ₹<span id="conversionRate">100</span>
+                            </div>
+                            <button class="btn" onclick="submitWithdrawal()">Request Withdrawal</button>
+                        </div>
+                    </div>
+
+                    <h3 style="color: white; margin: 20px 0 10px;">Withdrawal History</h3>
+                    <div class="glass-card" id="withdrawHistoryList">
+                        <p style="color: rgba(255,255,255,0.6); text-align: center;">No history yet</p>
+                    </div>
+                </div>
+
+                <!-- Announcements Section -->
+                <div id="announcementsSection" style="display: none;">
+                    <!-- Slider -->
+                    <div class="slider-container" id="sliderContainer">
+                        <img src="" alt="Slide" class="slider-img" id="sliderImage">
+                    </div>
+                    <div class="slider-dots" id="sliderDots"></div>
+
+                    <!-- Banner Ad Container -->
+                    <div class="ad-space" id="bannerAdContainer"></div>
+
+                    <!-- YouTube Video -->
+                    <div class="glass-card">
+                        <h3 style="color: white; margin-bottom: 15px;">Watch & Earn Tips</h3>
+                        <div id="youtubeEmbed" style="border-radius: 18px; overflow: hidden;"></div>
+                    </div>
+
+                    <!-- Social Links -->
+                    <div class="social-links" id="socialLinksContainer"></div>
+
+                    <!-- Leaderboard -->
+                    <div class="glass-card">
+                        <h3 style="color: white; margin-bottom: 15px;">🏆 Top Earners</h3>
+                        <div id="topEarnersList"></div>
+                        
+                        <h3 style="color: white; margin: 20px 0 15px;">👥 Top Referrers</h3>
+                        <div id="topReferrersList"></div>
+                        
+                        <h3 style="color: white; margin: 20px 0 15px;">📝 Most Tasks</h3>
+                        <div id="topTaskersList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Navigation -->
+            <div class="bottom-nav">
+                <div class="nav-item active" onclick="switchSection('home')">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('profile')">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('wallet')">
+                    <i class="fas fa-wallet"></i>
+                    <span>Wallet</span>
+                </div>
+                <div class="nav-item" onclick="switchSection('announcements')">
+                    <i class="fas fa-bullhorn"></i>
+                    <span>News</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Toast -->
+    <div class="popup-toast" id="popupToast">
+        <div class="popup-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="popup-title" id="popupTitle">Success</div>
+        <div class="popup-msg" id="popupMessage">Action completed</div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+    <script>
+        // Firebase Config - Replace with your own
+        const firebaseConfig = {
+    apiKey: "AIzaSyCCaaPI5_1W0x4BiNseiwb904ztOBINOgc",
+    authDomain: "appstore-8c86b.firebaseapp.com",
+    databaseURL: "https://appstore-8c86b-default-rtdb.firebaseio.com",
+    projectId: "appstore-8c86b",
+    storageBucket: "appstore-8c86b.firebasestorage.app",
+    messagingSenderId: "614114254662",
+    appId: "1:614114254662:web:c965ac9344c3e8351e8f47",
+    measurementId: "G-DRLMCB6RQF"
+};
+
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.database();
+
+        // Global State
+        let currentUser = null;
+        let userProfile = null;
+        let appSettings = {};
+        let tasksCompletedToday = 0;
+        let lastWithdrawTime = null;
+        let currentSliderIndex = 0;
+        let sliderInterval;
+        let adScriptsLoaded = false;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings().then(() => {
+                checkMaintenance();
+                
+                setTimeout(() => {
+                    document.getElementById('splashScreen').style.display = 'none';
+                    
+                    auth.onAuthStateChanged(async (user) => {
+                        if (user) {
+                            const userSnap = await db.ref('users/' + user.uid).once('value');
+                            const userData = userSnap.val();
+                            
+                            if (userData?.blocked) {
+                                auth.signOut();
+                                showAuth();
+                                showToast('Error', 'Account blocked. Contact support.');
+                            } else {
+                                currentUser = user;
+                                await loadUserData();
+                                initRealtimeListeners();
+                                showMainApp();
+                                loadAdScripts(); // Load ads instantly
+                            }
+                        } else {
+                            showAuth();
+                        }
+                    });
+                }, 2000);
+            });
+        });
+
+        // Load Settings
+        async function loadSettings() {
+            const snap = await db.ref('settings').once('value');
+            appSettings = snap.val() || {};
+            
+            if (appSettings.logoUrl) {
+                document.getElementById('splashLogo').src = appSettings.logoUrl;
+                document.getElementById('authLogo').src = appSettings.logoUrl;
+            }
+            
+            if (appSettings.defaultAvatar) {
+                document.getElementById('profileAvatar').src = appSettings.defaultAvatar;
+            }
+            
+            // Update withdraw limits
+            document.getElementById('minWithdrawAmount').textContent = appSettings.minWithdraw || 100;
+            document.getElementById('conversionRate').textContent = appSettings.conversionRate || 100;
+        }
+
+        // Check Maintenance
+        function checkMaintenance() {
+            if (appSettings.maintenance?.enabled) {
+                document.getElementById('splashScreen').style.display = 'none';
+                document.getElementById('authSection').style.display = 'none';
+                document.getElementById('mainSection').style.display = 'none';
+                document.getElementById('maintenanceScreen').style.display = 'flex';
+                document.getElementById('maintenanceImage').src = appSettings.maintenance.image || '';
+                document.getElementById('maintenanceBtn').onclick = () => {
+                    window.open(appSettings.maintenance.buttonLink || '#', '_blank');
+                };
+            }
+        }
+
+        // Load Ad Scripts with Proper Rendering
+        function loadAdScripts() {
+            if (!appSettings.adScripts) return;
+            
+            console.log('Loading Adstera ads...');
+            
+            // Load Popunder Ad (this runs in background)
+            if (appSettings.adScripts.popunder && appSettings.adScripts.popunder.trim() !== '') {
+                try {
+                    // Create a container for popunder script
+                    const popunderDiv = document.createElement('div');
+                    popunderDiv.style.display = 'none';
+                    popunderDiv.id = 'popunder-container';
+                    popunderDiv.innerHTML = appSettings.adScripts.popunder;
+                    document.body.appendChild(popunderDiv);
+                    
+                    // Execute any inline scripts
+                    const scripts = popunderDiv.getElementsByTagName('script');
+                    for (let i = 0; i < scripts.length; i++) {
+                        if (scripts[i].src) {
+                            // External script
+                            const script = document.createElement('script');
+                            script.src = scripts[i].src;
+                            script.async = true;
+                            document.head.appendChild(script);
+                        } else {
+                            // Inline script
+                            eval(scripts[i].innerHTML);
+                        }
+                    }
+                    console.log('✅ Popunder ad loaded');
+                } catch (e) {
+                    console.error('Error loading popunder ad:', e);
+                }
+            }
+
+            // Load Banner Ad with proper container
+            if (appSettings.adScripts.banner && appSettings.adScripts.banner.trim() !== '') {
+                const bannerContainer = document.getElementById('bannerAdContainer');
+                if (bannerContainer) {
+                    try {
+                        bannerContainer.innerHTML = appSettings.adScripts.banner;
+                        
+                        // Execute scripts in banner
+                        const scripts = bannerContainer.getElementsByTagName('script');
+                        for (let i = 0; i < scripts.length; i++) {
+                            if (scripts[i].src) {
+                                const script = document.createElement('script');
+                                script.src = scripts[i].src;
+                                script.async = true;
+                                document.head.appendChild(script);
+                            } else {
+                                eval(scripts[i].innerHTML);
+                            }
+                        }
+                        
+                        // Store for between-task insertion
+                        window.bannerAdHtml = appSettings.adScripts.banner;
+                        console.log('✅ Banner ad loaded');
+                    } catch (e) {
+                        console.error('Error loading banner ad:', e);
+                    }
+                }
+            }
+
+            // Load Social Bar (floating ads)
+            if (appSettings.adScripts.social && appSettings.adScripts.social.trim() !== '') {
+                try {
+                    // Remove old social bar if exists
+                    const oldSocial = document.getElementById('social-ad-container');
+                    if (oldSocial) oldSocial.remove();
+                    
+                    // Create new container
+                    const socialDiv = document.createElement('div');
+                    socialDiv.id = 'social-ad-container';
+                    socialDiv.innerHTML = appSettings.adScripts.social;
+                    document.body.appendChild(socialDiv);
+                    
+                    // Execute scripts
+                    const scripts = socialDiv.getElementsByTagName('script');
+                    for (let i = 0; i < scripts.length; i++) {
+                        if (scripts[i].src) {
+                            const script = document.createElement('script');
+                            script.src = scripts[i].src;
+                            script.async = true;
+                            document.head.appendChild(script);
+                        } else {
+                            eval(scripts[i].innerHTML);
+                        }
+                    }
+                    console.log('✅ Social bar ad loaded');
+                } catch (e) {
+                    console.error('Error loading social ad:', e);
+                }
+            }
+            
+            adScriptsLoaded = true;
+        }
+
+        // Load Tasks with Banner Ads Between Them
+        function loadTasks(tasks) {
+            const container = document.getElementById('tasksList');
+            if (!tasks) {
+                container.innerHTML = '<p style="color: white; text-align: center; padding: 30px;">No tasks available</p>';
+                return;
+            }
+            
+            let html = '';
+            let taskCount = 0;
+            let adCounter = 0;
+            
+            Object.entries(tasks).forEach(([id, task]) => {
+                if (userProfile?.completedTasks?.[id]) return;
+                if (tasksCompletedToday >= 5) return;
+                
+                taskCount++;
+                
+                html += `
+                    <div class="task-item" id="task-${id}">
+                        <div class="task-head">
+                            <span class="task-name">${escapeHtml(task.title)}</span>
+                            <span class="task-reward">+${task.reward} coins</span>
+                        </div>
+                        <div class="task-text">${escapeHtml(task.paragraph)}</div>
+                        <textarea class="typing-area" id="input-${id}" placeholder="Type the text exactly as shown..." onpaste="return false" oncopy="return false"></textarea>
+                        <button class="submit-task" onclick="submitTask('${id}', ${task.reward})">Submit & Earn</button>
+                    </div>
+                `;
+                
+                // Insert banner ad after every 2 tasks
+                if (taskCount % 2 === 0 && window.bannerAdHtml) {
+                    adCounter++;
+                    html += `<div class="ad-space" id="banner-ad-${adCounter}">${window.bannerAdHtml}</div>`;
+                }
+            });
+            
+            if (taskCount === 0) {
+                if (tasksCompletedToday >= 5) {
+                    html = '<p style="color: white; text-align: center; padding: 30px;">✨ You\'ve completed 5 tasks today! Come back tomorrow for more.</p>';
+                } else {
+                    html = '<p style="color: white; text-align: center; padding: 30px;">📝 No tasks available at the moment</p>';
+                }
+            }
+            
+            container.innerHTML = html;
+            
+            // Execute any scripts in the newly added banner ads
+            if (window.bannerAdHtml) {
+                setTimeout(() => {
+                    const newBanners = container.querySelectorAll('.ad-space script');
+                    newBanners.forEach(script => {
+                        if (script.src) {
+                            const newScript = document.createElement('script');
+                            newScript.src = script.src;
+                            newScript.async = true;
+                            document.head.appendChild(newScript);
+                        } else if (script.innerHTML) {
+                            eval(script.innerHTML);
+                        }
+                    });
+                }, 100);
+            }
+        }
+
+        // Submit Task with Popunder Ad
+        async function submitTask(taskId, reward) {
+            if (!currentUser || !userProfile) return;
+            
+            const input = document.getElementById(`input-${taskId}`).value;
+            if (!input.trim()) {
+                showToast('Error', 'Please type the text');
+                return;
+            }
+            
+            // Show popunder ad if available
+            if (appSettings.adScripts) {
+                if (appSettings.adScripts.popunderUrl) {
+                    // Open popunder URL
+                    const popunder = window.open(appSettings.adScripts.popunderUrl, '_blank');
+                    if (popunder) {
+                        popunder.blur();
+                        window.focus();
+                    }
+                } else if (appSettings.adScripts.popunder) {
+                    // Try to execute popunder script
+                    try {
+                        // Create a temporary container for popunder
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = appSettings.adScripts.popunder;
+                        const scripts = tempDiv.getElementsByTagName('script');
+                        for (let i = 0; i < scripts.length; i++) {
+                            if (scripts[i].src) {
+                                const script = document.createElement('script');
+                                script.src = scripts[i].src;
+                                script.async = true;
+                                document.head.appendChild(script);
+                            } else {
+                                eval(scripts[i].innerHTML);
+                            }
+                        }
+                    } catch (e) {
+                        console.log('Popunder executed');
+                    }
+                }
+            }
+            
+            try {
+                const userRef = db.ref('users/' + currentUser.uid);
+                await userRef.transaction((user) => {
+                    if (user) {
+                        user.coins = (user.coins || 0) + reward;
+                        user.totalEarned = (user.totalEarned || 0) + reward;
+                        
+                        const today = new Date().toDateString();
+                        if (user.lastEarningDate !== today) {
+                            user.todayEarned = reward;
+                            user.lastEarningDate = today;
+                        } else {
+                            user.todayEarned = (user.todayEarned || 0) + reward;
+                        }
+                        
+                        if (!user.completedTasks) user.completedTasks = {};
+                        user.completedTasks[taskId] = {
+                            date: new Date().toISOString(),
+                            reward: reward
+                        };
+                    }
+                    return user;
+                });
+                
+                showToast('Earned!', `+${reward} coins added to wallet`);
+                
+                // Remove task with animation
+                const taskEl = document.getElementById(`task-${taskId}`);
+                taskEl.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    taskEl.remove();
+                    tasksCompletedToday++;
+                    document.getElementById('todayTasksCount').textContent = tasksCompletedToday + '/5';
+                }, 300);
+                
+            } catch (err) {
+                console.error('Task submission error:', err);
+                showToast('Error', 'Failed to submit task');
+            }
+        }
+
+        // Helper function to escape HTML
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Show/Hide Sections
+        function showAuth() {
+            document.getElementById('splashScreen').style.display = 'none';
+            document.getElementById('mainSection').style.display = 'none';
+            document.getElementById('authSection').style.display = 'block';
+        }
+
+        function showMainApp() {
+            document.getElementById('splashScreen').style.display = 'none';
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('mainSection').style.display = 'block';
+        }
+
+        function showLogin() {
+            document.getElementById('authTitle').textContent = 'Welcome Back!';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        function showRegister() {
+            document.getElementById('authTitle').textContent = 'Create Account';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        // Login
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            const email = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPassword').value;
+            
+            if (!email || !pass) {
+                showToast('Error', 'Please fill all fields');
+                return;
+            }
+            
+            try {
+                await auth.signInWithEmailAndPassword(email, pass);
+                showToast('Welcome Back!', 'Login successful');
+            } catch (err) {
+                showToast('Error', err.message);
+            }
+        });
+
+        // Register
+        document.getElementById('registerBtn').addEventListener('click', async () => {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPassword').value;
+            const whatsapp = document.getElementById('regWhatsapp').value;
+            const addr = document.getElementById('regAddress').value;
+            const referral = document.getElementById('regReferral').value;
+            
+            if (!name || !email || !pass || !whatsapp || !addr) {
+                showToast('Error', 'All fields required');
+                return;
+            }
+            
+            try {
+                const result = await auth.createUserWithEmailAndPassword(email, pass);
+                
+                const userData = {
+                    name: name,
+                    email: email,
+                    whatsapp: whatsapp,
+                    address: addr,
+                    referralCode: generateReferralCode(),
+                    referredBy: referral || null,
+                    coins: 0,
+                    totalEarned: 0,
+                    todayEarned: 0,
+                    tasksCompleted: 0,
+                    blocked: false,
+                    createdAt: new Date().toISOString(),
+                    lastWithdraw: null,
+                    completedTasks: {}
+                };
+                
+                await db.ref('users/' + result.user.uid).set(userData);
+                
+                if (referral) {
+                    await processReferral(referral, result.user.uid);
+                }
+                
+                showToast('Success', 'Account created!');
+            } catch (err) {
+                showToast('Error', err.message);
+            }
+        });
+
+        function generateReferralCode() {
+            return 'TE' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        async function processReferral(code, newUserId) {
+            const users = await db.ref('users').orderByChild('referralCode').equalTo(code).once('value');
+            users.forEach((snap) => {
+                const referrerId = snap.key;
+                const reward = appSettings.referralReward || 10;
+                
+                db.ref('users/' + referrerId + '/coins').transaction(c => (c || 0) + reward);
+                db.ref('users/' + referrerId + '/referrals/' + newUserId).set({
+                    date: new Date().toISOString(),
+                    reward: reward
+                });
+            });
+        }
+
+        // Load User Data
+        async function loadUserData() {
+            if (!currentUser) return;
+            
+            const snap = await db.ref('users/' + currentUser.uid).once('value');
+            userProfile = snap.val();
+            
+            if (userProfile) {
+                document.getElementById('greetingText').textContent = `Hi, ${userProfile.name.split(' ')[0]}!`;
+                document.getElementById('walletBalance').textContent = userProfile.coins || 0;
+                
+                // Profile
+                document.getElementById('profileFullName').textContent = userProfile.name;
+                document.getElementById('profileEmail').textContent = userProfile.email;
+                document.getElementById('profilePhone').textContent = userProfile.whatsapp;
+                document.getElementById('profileAddress').textContent = userProfile.address;
+                document.getElementById('profileRefCode').textContent = userProfile.referralCode;
+                
+                // Stats
+                document.getElementById('totalEarnedCount').textContent = userProfile.coins || 0;
+                document.getElementById('walletTotalCoins').textContent = userProfile.coins || 0;
+                document.getElementById('walletTodayCoins').textContent = userProfile.todayEarned || 0;
+                
+                // Today's tasks
+                const today = new Date().toDateString();
+                tasksCompletedToday = Object.values(userProfile.completedTasks || {}).filter(t => 
+                    new Date(t.date).toDateString() === today
+                ).length;
+                document.getElementById('todayTasksCount').textContent = tasksCompletedToday + '/5';
+                
+                // Last withdraw
+                if (userProfile.lastWithdraw) {
+                    lastWithdrawTime = new Date(userProfile.lastWithdraw);
+                    updateWithdrawTimer();
+                }
+            }
+        }
+
+        // Realtime Listeners
+        function initRealtimeListeners() {
+            if (!currentUser) return;
+            
+            // User data
+            db.ref('users/' + currentUser.uid).on('value', (snap) => {
+                userProfile = snap.val();
+                if (userProfile) {
+                    document.getElementById('walletBalance').textContent = userProfile.coins || 0;
+                    document.getElementById('todayEarnedCount').textContent = userProfile.todayEarned || 0;
+                    
+                    const today = new Date().toDateString();
+                    tasksCompletedToday = Object.values(userProfile.completedTasks || {}).filter(t => 
+                        new Date(t.date).toDateString() === today
+                    ).length;
+                    document.getElementById('todayTasksCount').textContent = tasksCompletedToday + '/5';
+                }
+            });
+            
+            // Tasks
+            db.ref('tasks').on('value', (snap) => {
+                loadTasks(snap.val());
+            });
+            
+            // Notifications
+            db.ref('notifications').limitToLast(5).on('value', (snap) => {
+                const notifs = [];
+                snap.forEach(c => notifs.push(c.val()));
+                document.getElementById('notifCount').textContent = notifs.length;
+                window.notifications = notifs;
+            });
+            
+            // Settings (for instant ad updates)
+            db.ref('settings').on('value', (snap) => {
+                appSettings = snap.val() || {};
+                loadAdScripts(); // Reload ads when settings change
+                
+                // Update slider
+                if (appSettings.sliderImages?.length) {
+                    startSlider();
+                }
+                
+                // Update social links
+                updateSocialLinks();
+                
+                // Update YouTube
+                if (appSettings.youtubeLink) {
+                    const videoId = extractYoutubeId(appSettings.youtubeLink);
+                    if (videoId) {
+                        document.getElementById('youtubeEmbed').innerHTML = `
+                            <iframe width="100%" height="200" src="https://www.youtube.com/embed/${videoId}" 
+                                frameborder="0" allowfullscreen style="border-radius: 18px;"></iframe>
+                        `;
+                    }
+                }
+            });
+            
+            // Leaderboard
+            loadLeaderboard();
+            
+            // Withdrawals
+            db.ref('withdrawals/' + currentUser.uid).on('value', (snap) => {
+                loadWithdrawHistory(snap.val());
+            });
+        }
+
+        // Withdraw Functions
+        function updateWithdrawTimer() {
+            if (!lastWithdrawTime) {
+                document.getElementById('withdrawTimerDisplay').style.display = 'none';
+                document.getElementById('withdrawInputs').style.display = 'block';
+                return;
+            }
+            
+            const now = new Date();
+            const next = new Date(lastWithdrawTime.getTime() + 24 * 60 * 60 * 1000);
+            
+            if (now >= next) {
+                document.getElementById('withdrawTimerDisplay').style.display = 'none';
+                document.getElementById('withdrawInputs').style.display = 'block';
+                lastWithdrawTime = null;
+                return;
+            }
+            
+            document.getElementById('withdrawTimerDisplay').style.display = 'block';
+            document.getElementById('withdrawInputs').style.display = 'none';
+            
+            const diff = next - now;
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            
+            document.getElementById('countdownTimer').textContent = 
+                `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+            
+            setTimeout(updateWithdrawTimer, 1000);
+        }
+
+        async function submitWithdrawal() {
+            if (!currentUser || !userProfile) return;
+            
+            const name = document.getElementById('withdrawName').value;
+            const bank = document.getElementById('withdrawBank').value;
+            const ifsc = document.getElementById('withdrawIfsc').value;
+            const amount = parseInt(document.getElementById('withdrawAmount').value);
+            
+            if (!name || !bank || !ifsc || !amount) {
+                showToast('Error', 'All fields required');
+                return;
+            }
+            
+            const minWithdraw = appSettings.minWithdraw || 100;
+            if (amount < minWithdraw) {
+                showToast('Error', `Minimum ${minWithdraw} coins required`);
+                return;
+            }
+            
+            if (amount > userProfile.coins) {
+                showToast('Error', 'Insufficient balance');
+                return;
+            }
+            
+            if (lastWithdrawTime) {
+                const next = new Date(lastWithdrawTime.getTime() + 86400000);
+                if (new Date() < next) {
+                    showToast('Error', 'One withdrawal per 24 hours');
+                    return;
+                }
+            }
+            
+            try {
+                await db.ref('withdrawals/' + currentUser.uid).push({
+                    userId: currentUser.uid,
+                    userName: userProfile.name,
+                    name: name,
+                    bankName: bank,
+                    ifscCode: ifsc,
+                    amount: amount,
+                    status: 'pending',
+                    createdAt: new Date().toISOString()
+                });
+                
+                await db.ref('users/' + currentUser.uid + '/lastWithdraw').set(new Date().toISOString());
+                await db.ref('users/' + currentUser.uid + '/coins').transaction(c => (c || 0) - amount);
+                
+                showToast('Success', 'Withdrawal requested! Will be processed within 24h.');
+                
+                document.getElementById('withdrawName').value = '';
+                document.getElementById('withdrawBank').value = '';
+                document.getElementById('withdrawIfsc').value = '';
+                document.getElementById('withdrawAmount').value = '';
+                
+                lastWithdrawTime = new Date();
+                updateWithdrawTimer();
+                
+            } catch (err) {
+                showToast('Error', 'Request failed');
+            }
+        }
+
+        function loadWithdrawHistory(withdrawals) {
+            const container = document.getElementById('withdrawHistoryList');
+            if (!withdrawals) {
+                container.innerHTML = '<p style="color: rgba(255,255,255,0.6); text-align: center;">No history</p>';
+                return;
+            }
+            
+            let html = '';
+            Object.values(withdrawals).forEach(w => {
+                const statusColor = w.status === 'approved' ? '#4CAF50' : w.status === 'rejected' ? '#f44336' : '#fbbf24';
+                html += `
+                    <div style="padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: white;">${w.amount} coins</span>
+                            <span style="color: ${statusColor};">${w.status}</span>
+                        </div>
+                        <div style="color: rgba(255,255,255,0.5); font-size: 12px;">
+                            ${new Date(w.createdAt).toLocaleDateString()}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // Leaderboard
+        async function loadLeaderboard() {
+            const users = await db.ref('users').once('value');
+            const usersList = [];
+            users.forEach(c => usersList.push({ id: c.key, ...c.val() }));
+            
+            // Top earners
+            const topEarners = usersList.sort((a,b) => (b.totalEarned||0) - (a.totalEarned||0)).slice(0,3);
+            let earnHtml = '';
+            topEarners.forEach((u, i) => {
+                earnHtml += `
+                    <div class="leader-row">
+                        <div class="rank-badge">${i+1}</div>
+                        <div style="flex:1; color:white;">${u.name || 'User'}</div>
+                        <div style="color:#fbbf24; font-weight:600;">${u.totalEarned||0}</div>
+                    </div>
+                `;
+            });
+            document.getElementById('topEarnersList').innerHTML = earnHtml || '<p style="color:rgba(255,255,255,0.6);">No data</p>';
+            
+            // Top referrers
+            const topReferrers = usersList.sort((a,b) => (Object.keys(b.referrals||{}).length) - (Object.keys(a.referrals||{}).length)).slice(0,3);
+            let refHtml = '';
+            topReferrers.forEach((u, i) => {
+                refHtml += `
+                    <div class="leader-row">
+                        <div class="rank-badge">${i+1}</div>
+                        <div style="flex:1; color:white;">${u.name || 'User'}</div>
+                        <div style="color:#96c93d; font-weight:600;">${Object.keys(u.referrals||{}).length}</div>
+                    </div>
+                `;
+            });
+            document.getElementById('topReferrersList').innerHTML = refHtml || '<p style="color:rgba(255,255,255,0.6);">No data</p>';
+            
+            // Top taskers
+            const topTaskers = usersList.sort((a,b) => (Object.keys(b.completedTasks||{}).length) - (Object.keys(a.completedTasks||{}).length)).slice(0,3);
+            let taskHtml = '';
+            topTaskers.forEach((u, i) => {
+                taskHtml += `
+                    <div class="leader-row">
+                        <div class="rank-badge">${i+1}</div>
+                        <div style="flex:1; color:white;">${u.name || 'User'}</div>
+                        <div style="color:#f97316; font-weight:600;">${Object.keys(u.completedTasks||{}).length}</div>
+                    </div>
+                `;
+            });
+            document.getElementById('topTaskersList').innerHTML = taskHtml || '<p style="color:rgba(255,255,255,0.6);">No data</p>';
+        }
+
+        // Slider
+        function startSlider() {
+            const images = appSettings.sliderImages || [];
+            if (!images.length) return;
+            
+            document.getElementById('sliderImage').src = images[0];
+            
+            let dotsHtml = '';
+            images.forEach((_, i) => {
+                dotsHtml += `<span class="dot ${i === 0 ? 'active' : ''}" onclick="changeSlide(${i})"></span>`;
+            });
+            document.getElementById('sliderDots').innerHTML = dotsHtml;
+            
+            if (sliderInterval) clearInterval(sliderInterval);
+            sliderInterval = setInterval(() => {
+                currentSliderIndex = (currentSliderIndex + 1) % images.length;
+                document.getElementById('sliderImage').src = images[currentSliderIndex];
+                updateDots();
+            }, 3000);
+        }
+
+        function changeSlide(index) {
+            currentSliderIndex = index;
+            document.getElementById('sliderImage').src = appSettings.sliderImages[index];
+            updateDots();
+        }
+
+        function updateDots() {
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSliderIndex);
+            });
+        }
+
+        // Social Links
+        function updateSocialLinks() {
+            const links = appSettings.socialLinks || {};
+            const container = document.getElementById('socialLinksContainer');
+            
+            let html = '';
+            if (links.whatsapp) {
+                html += `<a href="${links.whatsapp}" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>`;
+            }
+            if (links.instagram) {
+                html += `<a href="${links.instagram}" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>`;
+            }
+            if (links.telegram) {
+                html += `<a href="${links.telegram}" target="_blank" class="social-icon"><i class="fab fa-telegram"></i></a>`;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        // Utils
+        function extractYoutubeId(url) {
+            const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+            return match ? match[1] : null;
+        }
+
+        function showNotifications() {
+            if (!window.notifications?.length) {
+                showToast('No Notifications', 'All caught up!');
+                return;
+            }
+            
+            let msg = 'Recent Notifications:\n\n';
+            window.notifications.forEach((n, i) => {
+                msg += `${i+1}. ${n.message}\n`;
+            });
+            alert(msg);
+        }
+
+        function copyReferral() {
+            const code = document.getElementById('profileRefCode').textContent;
+            navigator.clipboard.writeText(code);
+            showToast('Copied!', 'Referral code copied');
+        }
+
+        function shareReferral() {
+            const code = document.getElementById('profileRefCode').textContent;
+            const msg = `Join TypeEarn with my code: ${code}\nEarn money by typing!`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function logout() {
+            auth.signOut();
+            showAuth();
+        }
+
+        function switchSection(section) {
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            document.getElementById('homeSection').style.display = 'none';
+            document.getElementById('profileSection').style.display = 'none';
+            document.getElementById('walletSection').style.display = 'none';
+            document.getElementById('announcementsSection').style.display = 'none';
+            
+            document.getElementById(section + 'Section').style.display = 'block';
+            
+            if (section === 'wallet') updateWithdrawTimer();
+            if (section === 'announcements') {
+                if (appSettings.sliderImages?.length) startSlider();
+                loadLeaderboard();
+            }
+        }
+
+        function showToast(title, msg) {
+            const toast = document.getElementById('popupToast');
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupMessage').textContent = msg;
+            
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Add fade out animation
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeOut {
+                from { opacity: 1; transform: scale(1); }
+                to { opacity: 0; transform: scale(0.8); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
